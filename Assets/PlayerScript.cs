@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Use Physics.RayCastAll for detecting collisions . Then, on button up, trigger the related colliders
+
 public class PlayerScript : MonoBehaviour
 {
     public Camera mainCamera;
