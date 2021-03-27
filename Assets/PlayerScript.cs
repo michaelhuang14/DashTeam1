@@ -65,7 +65,7 @@ public class PlayerScript : MonoBehaviour
 			mouseDir.Normalize();
 			mouseDir *= maxDash;
 		}
-		
+		newVel = mouseDir;	
                 LR.SetPosition(0, RB.position + new Vector2(0f,0.5f));
                 LR.SetPosition(1, RB.position + mouseDir);
                 LR.enabled = true;
