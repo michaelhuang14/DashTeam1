@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
+    public Camera mainCamera;
+
     private Rigidbody2D RB;
 
     public float speed;
