@@ -8,80 +8,66 @@ public class PlayerScript : MonoBehaviour
 {
     public Camera mainCamera;
     public float normal_speed;
-    public float slow_speed;
-    public Color c1 = Color.blue;
-    public Color c2 = Color.red;
-    public float maxDash;
+    public Color dashColor1 = Color.blue;
+    public Color dashColor2 = Color.red;
+    public float maxDashLength;
 
-    private GameObject dashRangeChild;
-    private LineRenderer dashRange;
+    private LineRenderer dashRangeR;
     private Rigidbody2D RB;
-    private LineRenderer LR;
-    private LineRenderer glareR;
+    private LineRenderer dashLineR;
     private SpriteRenderer spriteR;
     
-    private Vector2 mouseDir = new Vector2(0f,0f);
+    
     private float dashLength;
     private int segments = 50;
-    private int glareLength = 2;
-    private int glareCounter = 0;
+
     void Start()
     {
-	RB = GetComponent<Rigidbody2D>();
-	LR = gameObject.AddComponent<LineRenderer>();
-	dashRange = new GameObject().AddComponent<LineRenderer>();
-        dashRange.gameObject.transform.parent = transform;
-	spriteR = GetComponent<SpriteRenderer>();
-	glareR = new GameObject().AddComponent<LineRenderer>();
-	glareR.gameObject.transform.parent = transform;
+	    RB = GetComponent<Rigidbody2D>();
+	    dashLineR = gameObject.AddComponent<LineRenderer>();
+	    dashRangeR = new GameObject().AddComponent<LineRenderer>();
+        dashRangeR.gameObject.transform.parent = transform;
+	    spriteR = GetComponent<SpriteRenderer>();
 	
-	float alpha = 1.0f;
+	    float alpha = 1.0f;
 	
-        dashRange.material = new Material(Shader.Find("Sprites/Default"));
-	dashRange.SetWidth(0.05f, 0.05f);
-	dashRange.enabled = false;
-	dashRange.positionCount = segments + 1;
-	dashRange.useWorldSpace = false;
-	dashRange.material.SetColor("_Color", Color.white);
-	dashRange.sortingOrder = 1;
+        dashRangeR.material = new Material(Shader.Find("Sprites/Default"));
+        AnimationCurve dashRangeCurve = new AnimationCurve();
+        dashRangeCurve.AddKey(0, 0.15f);
+        dashRangeCurve.AddKey(1, 0.15f);
+        dashRangeR.widthCurve = dashRangeCurve;
+	    dashRangeR.enabled = false;
+	    dashRangeR.positionCount = segments + 1;
+	    dashRangeR.useWorldSpace = false;
+	    dashRangeR.material.SetColor("_Color", Color.white);
+	    dashRangeR.sortingOrder = 1;
 	
-        LR.material = new Material(Shader.Find("Sprites/Default"));
+        dashLineR.material = new Material(Shader.Find("Sprites/Default"));
         Gradient gradient2 = new Gradient();
         gradient2.SetKeys(
-            new GradientColorKey[] { new GradientColorKey(c1, 0.0f), new GradientColorKey(c2, 1.0f) },
+            new GradientColorKey[] { new GradientColorKey(dashColor1, 0.0f), new GradientColorKey(dashColor2, 1.0f) },
             new GradientAlphaKey[] { new GradientAlphaKey(alpha, 0.0f), new GradientAlphaKey(alpha, 1.0f) }
         );
+	    dashLineR.sortingOrder = 1;
+        dashLineR.colorGradient = gradient2;
+        AnimationCurve dashCurve = new AnimationCurve();
+        dashCurve.AddKey(0, 0.15f);
+        dashCurve.AddKey(1, 0.15f);
+        dashLineR.widthCurve = dashCurve;
+        dashLineR.enabled = false;
+        dashLineR.SetPosition(0, RB.position);
+        dashLineR.SetPosition(1, RB.position + (new Vector2(0f,5f)));
+        dashLineR.positionCount = 2;
         
-	LR.sortingOrder = 1;
-        LR.colorGradient = gradient2;
-        LR.SetWidth(0.15f, 0.15f);
-        LR.enabled = false;
-        LR.SetPosition(0, RB.position);
-        LR.SetPosition(1, RB.position + (new Vector2(0f,5f)));
-        LR.positionCount = 2;
-        
-	glareR.material = new Material(Shader.Find("Sprites/Default"));
-	glareR.material.SetColor("_Color", Color.white);
-       	glareR.enabled = false; 
-	glareR.SetWidth(0.08f, 0.08f);
-	glareR.sortingOrder = 1;
-
-	normal_speed = 10f;
-	slow_speed = 0.3f;
+	    normal_speed = 10f;
         
         spriteR.sortingOrder = 2;
-	spriteR.material.SetColor("_Color", Color.black);
-        maxDash = 10f;
-	dashLength = 0f;
+	    spriteR.material.SetColor("_Color", Color.black);
+        maxDashLength = 10f;
+	    dashLength = 0f;
     }
-    void glareLines()
-    {
-	glareR.SetPosition(0, RB.position + new Vector2(0f,0.5f)- 1.5f*mouseDir);
-        glareR.SetPosition(1, RB.position + 0.15f*mouseDir);
-	glareR.positionCount = 2;
-    	glareR.enabled = true;
-    }
-    void CreatePoints ()
+
+    void DrawDashRangeCirc ()
     {
         float x;
         float y;
@@ -90,20 +76,47 @@ public class PlayerScript : MonoBehaviour
 
         for (int i = 0; i < (segments + 1); i++)
         {
-            x = UnityEngine.Mathf.Sin (UnityEngine.Mathf.Deg2Rad * angle) * maxDash;
-            y = UnityEngine.Mathf.Cos (UnityEngine.Mathf.Deg2Rad * angle) * maxDash;
+            x = UnityEngine.Mathf.Sin (UnityEngine.Mathf.Deg2Rad * angle) * maxDashLength;
+            y = UnityEngine.Mathf.Cos (UnityEngine.Mathf.Deg2Rad * angle) * maxDashLength;
 
-            dashRange.SetPosition (i, new Vector2(x,y) );
+            dashRangeR.SetPosition (i, new Vector2(x,y) );
 
             angle += (360f / segments);
         }
+	    dashRangeR.enabled = true;
     } 
-    void fixed_update(){
-
+   
+    void PlanDash()
+    {
+        spriteR.material.SetColor("_Color", Color.white);
+        Vector2 lineDir = new Vector2(0f, 0f);
+        Vector3 mousept = Input.mousePosition;
+        mousept.z = Camera.main.nearClipPlane;
+        Vector2 mouseVec = Camera.main.ScreenToWorldPoint(mousept);
+        lineDir = mouseVec - RB.position;
+	    float orig_dist = lineDir.magnitude;
+	    float min_dist = System.Math.Min(orig_dist, System.Math.Min(maxDashLength, dashLength));
+        lineDir.Normalize();
+        lineDir *= min_dist;
+        dashLineR.SetPosition(0, RB.position + new Vector2(0f,0.5f));
+        dashLineR.SetPosition(1, RB.position + lineDir);
+	    DrawDashRangeCirc();
+        dashLength += 0.2f;
+        dashLineR.enabled = true;
     }
+
+    void ExecuteDash()
+    {
+        spriteR.material.SetColor("_Color", Color.black);
+        dashLength = 0f;
+        RB.position = dashLineR.GetPosition(1);
+        dashLineR.enabled = false;
+        dashRangeR.enabled = false;
+    }
+
     void Update()
     {	
-	float speed = normal_speed;
+	    float speed = normal_speed;
         Vector2 newVel = new Vector2(0f, 0f);
         if (Input.GetKey(KeyCode.W)) newVel.y += 1f;
         if (Input.GetKey(KeyCode.S)) newVel.y -= 1f;
@@ -111,41 +124,13 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetKey(KeyCode.A)) newVel.x -= 1f;
         if (Input.GetMouseButton(0))
         {
-		dashLength += 0.2f;
-                speed = slow_speed;
-                Vector3 mousept = Input.mousePosition;
-                mousept.z = Camera.main.nearClipPlane;
-                Vector2 worldpos = Camera.main.ScreenToWorldPoint(mousept);
-                mouseDir = worldpos - RB.position;
-		float orig_dist = mouseDir.magnitude;
-		mouseDir.Normalize();
-		newVel = mouseDir;
-		float min_dist = System.Math.Min(orig_dist, System.Math.Min(maxDash, dashLength));
-		mouseDir *= min_dist;
-                LR.SetPosition(0, RB.position + new Vector2(0f,0.5f));
-                LR.SetPosition(1, RB.position + mouseDir);
-                LR.enabled = true;
-		spriteR.material.SetColor("_Color", Color.white);
-		CreatePoints();
-		dashRange.enabled = true;
-		
+            PlanDash();
+            speed = 0;
         }
         if (Input.GetMouseButtonUp(0))
         {
-		dashLength = 0f;
-                RB.position = LR.GetPosition(1);
-                LR.enabled = false;       
-		dashRange.enabled = false;
-		glareLines();
-		glareCounter = 0;
-		spriteR.material.SetColor("_Color", Color.black); 
+            ExecuteDash();
         }
-	if (glareCounter < glareLength){
-		glareCounter ++;
-	}else{
-		glareR.enabled = false;
-	}
-        newVel.Normalize(); newVel *= speed;
-        RB.velocity = newVel; 
+        newVel.Normalize(); newVel *= speed; RB.velocity = newVel; 
     }
 }
