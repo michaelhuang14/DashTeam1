@@ -20,7 +20,7 @@ public class PlayerScript : MonoBehaviour
     
     private float dashLength;
     private int segments = 50;
-
+    private int dashLayerMask = 1 << 6; // during dash, ignore colliders on all objects except those of the 6th layer
     void Start()
     {
 	    RB = GetComponent<Rigidbody2D>();
@@ -107,11 +107,30 @@ public class PlayerScript : MonoBehaviour
 
     void ExecuteDash()
     {
+
+        RaycastHit2D[] hits;
+
+        Vector2 dashLine = dashLineR.GetPosition(1) - dashLineR.GetPosition(0);
+        float max_dist = dashLine.magnitude;
+        dashLine.Normalize();
+        hits = Physics2D.RaycastAll(dashLineR.GetPosition(0), dashLine, max_dist, dashLayerMask);
+        Debug.Log("detected " + hits.Length.ToString() + " hits");
+        for (int i = 0; i < hits.Length; i++)
+        {
+            RaycastHit2D hit = hits[i];
+            hit.transform.gameObject.SendMessage("Death");
+
+        }
         spriteR.material.SetColor("_Color", Color.black);
         dashLength = 0f;
         RB.position = dashLineR.GetPosition(1);
         dashLineR.enabled = false;
         dashRangeR.enabled = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("Detected Player Hit!");
     }
 
     void Update()
