@@ -118,8 +118,7 @@ public class PlayerScript : MonoBehaviour
         for (int i = 0; i < hits.Length; i++)
         {
             RaycastHit2D hit = hits[i];
-            hit.transform.gameObject.SendMessage("Death");
-
+            hit.transform.gameObject.SendMessage("Death", SendMessageOptions.RequireReceiver);
         }
         spriteR.material.SetColor("_Color", Color.black);
         dashLength = 0f;
@@ -150,6 +149,8 @@ public class PlayerScript : MonoBehaviour
         {
             ExecuteDash();
         }
+        
         newVel.Normalize(); newVel *= speed; RB.velocity = newVel; 
     }
+
 }

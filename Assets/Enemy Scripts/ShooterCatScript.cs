@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SniperCatScript : MonoBehaviour
+public class ShooterCatScript : MonoBehaviour
 {
+    public GameObject Player;
+
     private SpriteRenderer spriteR;
-    // Start is called before the first frame update
     void Start()
     {
         spriteR = GetComponent<SpriteRenderer>();
@@ -13,14 +14,14 @@ public class SniperCatScript : MonoBehaviour
         spriteR.material.SetColor("_Color", Color.white);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
         
     }
 
     public void Death()
-    { 
-        Debug.Log("Dash hit detected");
+    {
+        // after boom boom effects are finished by artists, instantiate boom boom effects here
+        Destroy(gameObject);
     }
 }
