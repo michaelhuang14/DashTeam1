@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
+  BulletPF: {fileID: 3437065166315380956, guid: 9c88c3235071e1c49812eb6cb8f529c1, type: 3}
 --- !u!58 &6976793928226953084
 CircleCollider2D:
   m_ObjectHideFlags: 0
