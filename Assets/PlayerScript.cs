@@ -103,6 +103,8 @@ public class PlayerScript : MonoBehaviour
 	    DrawDashRangeCirc();
         dashLength += 0.2f;
         dashLineR.enabled = true;
+
+        Time.timeScale = 0.4f;
     }
 
     void ExecuteDash()
@@ -125,6 +127,8 @@ public class PlayerScript : MonoBehaviour
         RB.position = dashLineR.GetPosition(1);
         dashLineR.enabled = false;
         dashRangeR.enabled = false;
+
+        Time.timeScale = 1f;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
