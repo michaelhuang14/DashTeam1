@@ -4,23 +4,19 @@ using UnityEngine;
 
 public class GameScript : MonoBehaviour
 {
+    // This class will contain Game Management behavior, and integrate various 
+    // subsystems such as enemy spawning, UI effects on gamestate, level transitions, etc.
+    
     public GameObject Player;
-
     public GameObject SniperCatPF;
     public GameObject ShooterCatPF;
 
+    private EnemySpawner enemySpawner;
     void Start()
     {
-        //spawning in enemies (can change spawning mechanics later)
-        for (int i = 0; i < 3; i++)
-        {
-            GameObject tempSniperCat = Instantiate(SniperCatPF);
-            tempSniperCat.GetComponent<SniperCatScript>().Player = Player;
-            GameObject tempShooterCat = Instantiate(ShooterCatPF);
-            tempShooterCat.GetComponent<ShooterCatScript>().Player = Player;
-            tempSniperCat.transform.position = new Vector3(Random.Range(-15, 15), Random.Range(-15, 15), 0);
-            tempShooterCat.transform.position = new Vector3(Random.Range(-15, 15), Random.Range(-15, 15), 0);
-        }
+        enemySpawner = new EnemySpawner(Player, SniperCatPF, ShooterCatPF);
+        enemySpawner.SpawnWave();
+        
     }
 
     void Update()

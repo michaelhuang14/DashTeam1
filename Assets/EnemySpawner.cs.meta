@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 01b1d30b2915b476e8defeaadcf10f07
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - Player: {instanceID: 0}
+  - SniperCatPF: {fileID: 6976793928226953085, guid: 6fd65495171a0b04393a1ccce564a0f6, type: 3}
+  - ShooterCatPF: {fileID: 9100485421540538962, guid: 06b5db073f5bcb94796cec83ced67297, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
