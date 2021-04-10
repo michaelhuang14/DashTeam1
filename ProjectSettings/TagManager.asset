@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - ShooterCat
+  - SniperCat
+  - TurretCat
+  - player
   layers:
   - Default
   - TransparentFX
