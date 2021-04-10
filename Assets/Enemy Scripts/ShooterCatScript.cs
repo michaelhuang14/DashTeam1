@@ -43,7 +43,6 @@ public class ShooterCatScript : MonoBehaviour, Enemy
         // after boom boom effects are finished by artists, instantiate boom boom effects here
         isDead = true;
         Debug.Log("Shooter Cat Death");
-        //Destroy(gameObject);
     }
 
     public void movement()

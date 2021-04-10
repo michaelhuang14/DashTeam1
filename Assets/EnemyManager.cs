@@ -1,6 +1,8 @@
 ﻿
 using System.Collections.Generic;
 using UnityEngine;
+
+// Responsible for spawning, keeping track of, and Destroying all enemies
 public class EnemyManager : MonoBehaviour
 {
     
@@ -10,6 +12,7 @@ public class EnemyManager : MonoBehaviour
 
     private List<GameObject> activeEnemies = new List<GameObject>();
 
+    // Pass in all enemy prefabes at instantiation
     public EnemyManager(GameObject player, GameObject snipercat, GameObject shootercat)
     {
         this.player = player;
@@ -19,7 +22,7 @@ public class EnemyManager : MonoBehaviour
 
     public void spawnWave()
     {
-        //spawning in enemies (can change spawning mechanics later
+        //spawning in enemies (can change spawning mechanics later)
         for (int i = 0; i < 3; i++)
         {
             GameObject tempSniperCat = Instantiate(SniperCatPF);

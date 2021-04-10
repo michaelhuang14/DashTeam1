@@ -12,6 +12,7 @@ public class GameScript : MonoBehaviour
     public GameObject ShooterCatPF;
 
     private EnemyManager enemyManager;
+
     void Start()
     {
         enemyManager = new EnemyManager(Player, SniperCatPF, ShooterCatPF);

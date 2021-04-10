@@ -1,6 +1,7 @@
 ﻿using System;
 
-// All enemies must implement this interface!
+// All enemies must implement this interface! Note that
+// enemies DO NOT destroy themselves, that is the job of the EnemyManager
 public interface Enemy
 {
     // Enemy's status
