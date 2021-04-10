@@ -120,7 +120,7 @@ public class PlayerScript : MonoBehaviour
         for (int i = 0; i < hits.Length; i++)
         {
             RaycastHit2D hit = hits[i];
-            hit.transform.gameObject.SendMessage("Death", SendMessageOptions.RequireReceiver);
+            hit.transform.gameObject.SendMessage("death", SendMessageOptions.RequireReceiver);
         }
         spriteR.material.SetColor("_Color", Color.black);
         dashLength = 0f;

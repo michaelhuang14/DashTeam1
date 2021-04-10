@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SniperCatScript : MonoBehaviour
+public class SniperCatScript : MonoBehaviour, Enemy
 {
     public GameObject Player;
-
+    public bool isDead { get; set; }
     public GameObject BulletPF;
 
     private Rigidbody2D RB;
@@ -38,7 +38,7 @@ public class SniperCatScript : MonoBehaviour
         spriteR.sortingOrder = 2;
         spriteR.material.SetColor("_Color", Color.gray);
         RB = GetComponent<Rigidbody2D>();
-
+        isDead = false;
         speed = 3.5f;
 
         StartCoroutine(MakeBullet());
@@ -47,6 +47,9 @@ public class SniperCatScript : MonoBehaviour
     void Update()
     {
         Patterns();
+        // TODO switch to this:
+        //movement();
+        //attack();
     }
 
     IEnumerator MakeBullet()
@@ -63,9 +66,19 @@ public class SniperCatScript : MonoBehaviour
         }
     }
 
-    public void Death()
+    public void death()
     {
         // after boom boom effects are finished by artists, instantiate boom boom effects here
-        Destroy(gameObject);
+        isDead = true;
+    }
+
+    public void movement()
+    {
+        //TODO
+    }
+
+    public void attack()
+    {
+        //TODO
     }
 }

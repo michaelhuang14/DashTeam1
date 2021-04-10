@@ -11,16 +11,25 @@ public class GameScript : MonoBehaviour
     public GameObject SniperCatPF;
     public GameObject ShooterCatPF;
 
-    private EnemySpawner enemySpawner;
+    private EnemyManager enemyManager;
     void Start()
     {
-        enemySpawner = new EnemySpawner(Player, SniperCatPF, ShooterCatPF);
-        enemySpawner.SpawnWave();
-        
+        enemyManager = new EnemyManager(Player, SniperCatPF, ShooterCatPF);
+        enemyManager.spawnWave();
+        StartCoroutine(manageEnemies());
     }
 
     void Update()
     {
         
+    }
+
+    IEnumerator manageEnemies()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.01f);
+            enemyManager.spin();
+        }
     }
 }

@@ -2,26 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShooterCatScript : MonoBehaviour
+public class ShooterCatScript : MonoBehaviour, Enemy
 {
     public GameObject Player;
     public GameObject BulletPF;
+    public bool isDead { get; set; }
 
     private int ctr;
 
     private SpriteRenderer spriteR;
+
     void Start()
     {
         spriteR = GetComponent<SpriteRenderer>();
         spriteR.sortingOrder = 2;
         spriteR.material.SetColor("_Color", Color.red);
-
+        isDead = false;
         StartCoroutine(MakeBullet());
     }
 
     void Update()
     {
-
+        movement();
+        attack();
     }
 
     IEnumerator MakeBullet()
@@ -35,9 +38,21 @@ public class ShooterCatScript : MonoBehaviour
         }
     }
 
-    public void Death()
+    public void death()
     {
         // after boom boom effects are finished by artists, instantiate boom boom effects here
-        Destroy(gameObject);
+        isDead = true;
+        Debug.Log("Shooter Cat Death");
+        //Destroy(gameObject);
+    }
+
+    public void movement()
+    {
+        //TODO
+    }
+
+    public void attack()
+    {
+        //TODO
     }
 }
