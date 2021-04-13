@@ -6,6 +6,7 @@ public class SoundManager : MonoBehaviour
 {
     private AudioSource combatLoop;
     private UnityEngine.Audio.AudioMixerGroup pitchBendGroup;
+    private AudioSource zawarudo;
     // Use this for initialization
 
     public SoundManager(GameObject go)
@@ -16,6 +17,10 @@ public class SoundManager : MonoBehaviour
         combatLoop.outputAudioMixerGroup = pitchBendGroup;
         combatLoop.loop = true;
         combatLoop.volume = 0.2f;
+        zawarudo = go.AddComponent<AudioSource>();
+        zawarudo.clip = Resources.Load("Za Warudo Sound Effect") as AudioClip;
+        zawarudo.pitch = 1.5f;
+        zawarudo.volume = 0.2f;
     }
 
     public void startCombatLoop()
@@ -25,6 +30,7 @@ public class SoundManager : MonoBehaviour
 
     public void slowDownCombatLoop()
     {
+        zawarudo.Play(0);
         Debug.Log("dash planning recieved");
         combatLoop.pitch = 0.5f;
         combatLoop.volume = 0.09f;
