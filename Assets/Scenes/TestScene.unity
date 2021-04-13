@@ -155,6 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 981b9129fe182744898ee561f741d860, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameManager: {fileID: 1950686194}
   mainCamera: {fileID: 1248831844}
   normal_speed: 0
   dashColor1: {r: 0, g: 0, b: 1, a: 1}

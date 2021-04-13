@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 // Use Physics.RayCastAll for detecting collisions . Then, on button up, trigger the related colliders
 
 public class PlayerScript : MonoBehaviour
 {
+
+    public GameObject GameManager;
     public Camera mainCamera;
     public float normal_speed;
     public Color dashColor1 = Color.blue;
@@ -21,6 +24,7 @@ public class PlayerScript : MonoBehaviour
     private float dashLength;
     private int segments = 50;
     private int dashLayerMask = 1 << 6; // during dash, ignore colliders on all objects except those of the 6th layer
+    private bool planningDash = false;
     void Start()
     {
 	    RB = GetComponent<Rigidbody2D>();
@@ -88,6 +92,12 @@ public class PlayerScript : MonoBehaviour
    
     void PlanDash()
     {
+        if (!planningDash)
+        {
+            Debug.Log("dash start invoked!");
+            GameManager.GetComponent<GameScript>().dashPlanStart();
+        }
+        planningDash = true;
         spriteR.material.SetColor("_Color", Color.white);
         Vector2 lineDir = new Vector2(0f, 0f);
         Vector3 mousept = Input.mousePosition;
@@ -110,8 +120,9 @@ public class PlayerScript : MonoBehaviour
     void ExecuteDash()
     {
 
+        GameManager.GetComponent<GameScript>().dashPlanEnd();
         RaycastHit2D[] hits;
-
+        planningDash = false;
         Vector2 dashLine = dashLineR.GetPosition(1) - dashLineR.GetPosition(0);
         float max_dist = dashLine.magnitude;
         dashLine.Normalize();
@@ -133,7 +144,7 @@ public class PlayerScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Detected Player Hit!");
+        //Debug.Log("Detected Player Hit!");
     }
 
     void Update()
@@ -156,5 +167,5 @@ public class PlayerScript : MonoBehaviour
         
         newVel.Normalize(); newVel *= speed; RB.velocity = newVel; 
     }
-
+  
 }

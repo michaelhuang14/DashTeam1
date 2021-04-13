@@ -12,9 +12,14 @@ public class GameScript : MonoBehaviour
     public GameObject ShooterCatPF;
 
     private EnemyManager enemyManager;
+    private SoundManager soundManager;
+
 
     void Start()
     {
+
+        soundManager = new SoundManager(gameObject);
+        soundManager.startCombatLoop();
         enemyManager = new EnemyManager(Player, SniperCatPF, ShooterCatPF);
         enemyManager.spawnWave();
         StartCoroutine(manageEnemies());
@@ -32,5 +37,13 @@ public class GameScript : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
             enemyManager.spin();
         }
+    }
+
+    public void dashPlanStart() {
+        soundManager.slowDownCombatLoop();
+    }
+    public void dashPlanEnd()
+    {
+        soundManager.defaultCombatLoop();
     }
 }
