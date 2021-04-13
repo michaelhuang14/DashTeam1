@@ -41,9 +41,13 @@ public class GameScript : MonoBehaviour
 
     public void dashPlanStart() {
         soundManager.slowDownCombatLoop();
+        Time.timeScale = 0.4f;
     }
+
+
     public void dashPlanEnd()
     {
         soundManager.defaultCombatLoop();
+        Time.timeScale = 1f;
     }
 }
