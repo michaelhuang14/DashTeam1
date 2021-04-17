@@ -44,13 +44,6 @@ public class SniperCatScript : MonoBehaviour, Enemy
         StartCoroutine(MakeBullet());
     }
 
-    void Update()
-    {
-        Patterns();
-        // TODO switch to this:
-        //movement();
-        //attack();
-    }
 
     IEnumerator MakeBullet()
     {
@@ -71,14 +64,8 @@ public class SniperCatScript : MonoBehaviour, Enemy
         // after boom boom effects are finished by artists, instantiate boom boom effects here
         isDead = true;
     }
-
-    public void movement()
+    public void step()
     {
-        //TODO
-    }
 
-    public void attack()
-    {
-        //TODO
     }
 }

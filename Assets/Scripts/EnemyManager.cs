@@ -8,16 +8,18 @@ public class EnemyManager : MonoBehaviour
     
     private GameObject SniperCatPF;
     private GameObject ShooterCatPF;
+    private GameObject ZombieCatPF;
     private GameObject player;
 
     private List<GameObject> activeEnemies = new List<GameObject>();
 
     // Pass in all enemy prefabes at instantiation
-    public EnemyManager(GameObject player, GameObject snipercat, GameObject shootercat)
+    public EnemyManager(GameObject player, GameObject snipercat, GameObject shootercat, GameObject zombiecat)
     {
         this.player = player;
         SniperCatPF = snipercat;
         ShooterCatPF = shootercat;
+        ZombieCatPF = zombiecat;
     }
 
     public void spawnWave()
@@ -27,13 +29,18 @@ public class EnemyManager : MonoBehaviour
         {
             GameObject tempSniperCat = Instantiate(SniperCatPF);
             tempSniperCat.GetComponent<SniperCatScript>().Player = player;
-            GameObject tempShooterCat = Instantiate(ShooterCatPF);
-            tempShooterCat.GetComponent<ShooterCatScript>().Player = player;
+            //GameObject tempShooterCat = Instantiate(ShooterCatPF);
+            //tempShooterCat.GetComponent<ShooterCatScript>().Player = player;
+            GameObject tempZombieCat = Instantiate(ZombieCatPF);
+            tempZombieCat.GetComponent<ZombieCatScript>().Player = player;
+            tempZombieCat.GetComponent<ZombieCatScript>().activeEnemies = activeEnemies;
             tempSniperCat.transform.position = new Vector3(Random.Range(-15, 15), Random.Range(-15, 15), 0);
-            tempShooterCat.transform.position = new Vector3(Random.Range(-15, 15), Random.Range(-15, 15), 0);
+            //tempShooterCat.transform.position = new Vector3(Random.Range(-15, 15), Random.Range(-15, 15), 0);
+            tempZombieCat.transform.position = new Vector3(Random.Range(-15, 15), Random.Range(-15, 15), 0);
 
-            activeEnemies.Add(tempShooterCat);
+            //activeEnemies.Add(tempShooterCat);
             activeEnemies.Add(tempSniperCat);
+            activeEnemies.Add(tempZombieCat);
         }
 
     }
@@ -52,6 +59,9 @@ public class EnemyManager : MonoBehaviour
                 case "SniperCat":
                     ts = enemy.GetComponent<SniperCatScript>();
                     break;
+                case "ZombieCat":
+                    ts = enemy.GetComponent<ZombieCatScript>();
+                    break;
                 default:
                     Debug.Log("Unkown Enemy Type");
                     break;
@@ -61,6 +71,10 @@ public class EnemyManager : MonoBehaviour
                 activeEnemies.RemoveAt(i);
                 Destroy(enemy);
                 deathcounter++;
+            }
+            else if(ts != null)
+            {
+                ts.step();
             }
         }
         if (deathcounter > 1) {

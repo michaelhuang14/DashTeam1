@@ -8,6 +8,7 @@ TagManager:
   - SniperCat
   - TurretCat
   - player
+  - ZombieCat
   layers:
   - Default
   - TransparentFX

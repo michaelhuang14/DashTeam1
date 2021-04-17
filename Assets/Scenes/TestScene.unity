@@ -473,6 +473,7 @@ MonoBehaviour:
   Player: {fileID: 837083291}
   SniperCatPF: {fileID: 6976793928226953085, guid: 6fd65495171a0b04393a1ccce564a0f6, type: 3}
   ShooterCatPF: {fileID: 9100485421540538962, guid: 06b5db073f5bcb94796cec83ced67297, type: 3}
+  ZombieCatPF: {fileID: 8346882581208742844, guid: 85ca4c2de248e7d41a3eb869c6e8ee3b, type: 3}
 --- !u!4 &1950686196
 Transform:
   m_ObjectHideFlags: 0

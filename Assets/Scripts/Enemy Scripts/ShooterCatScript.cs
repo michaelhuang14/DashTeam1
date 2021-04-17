@@ -21,11 +21,6 @@ public class ShooterCatScript : MonoBehaviour, Enemy
         StartCoroutine(MakeBullet());
     }
 
-    void Update()
-    {
-        movement();
-        attack();
-    }
 
     IEnumerator MakeBullet()
     {
@@ -45,13 +40,8 @@ public class ShooterCatScript : MonoBehaviour, Enemy
         Debug.Log("Shooter Cat Death");
     }
 
-    public void movement()
+    public void step()
     {
-        //TODO
-    }
 
-    public void attack()
-    {
-        //TODO
     }
 }

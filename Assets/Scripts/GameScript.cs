@@ -10,6 +10,7 @@ public class GameScript : MonoBehaviour
     public GameObject Player;
     public GameObject SniperCatPF;
     public GameObject ShooterCatPF;
+    public GameObject ZombieCatPF;
 
     private EnemyManager enemyManager;
     private SoundManager soundManager;
@@ -20,7 +21,7 @@ public class GameScript : MonoBehaviour
 
         soundManager = new SoundManager(gameObject);
         soundManager.startCombatLoop();
-        enemyManager = new EnemyManager(Player, SniperCatPF, ShooterCatPF);
+        enemyManager = new EnemyManager(Player, SniperCatPF, ShooterCatPF, ZombieCatPF);
         enemyManager.spawnWave();
         StartCoroutine(manageEnemies());
     }

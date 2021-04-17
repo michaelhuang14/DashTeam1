@@ -13,9 +13,7 @@ public interface Enemy
 
     // Attack behavior, e.g. only shoots a certain distance away from player,
     // at certain intervals, etc.
-    void attack();
-
     // Movement behavior, e.g. runs towards the player, away from the player, etc.
-    void movement();
+    void step();
     
 }
