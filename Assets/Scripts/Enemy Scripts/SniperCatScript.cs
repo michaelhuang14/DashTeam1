@@ -16,10 +16,10 @@ public class SniperCatScript : MonoBehaviour, Enemy
     bool WithinRange()
     {
         Vector3 displacement = transform.position - Player.transform.position;
-        return (displacement.magnitude > 20);
+        return (displacement.magnitude > 10);
     }
 
-    void Patterns()
+    void pattern()
     {
         Vector3 displacement = transform.position - Player.transform.position;
         if (displacement.magnitude < 20)
@@ -66,6 +66,6 @@ public class SniperCatScript : MonoBehaviour, Enemy
     }
     public void step()
     {
-
+        pattern();
     }
 }

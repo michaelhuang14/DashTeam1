@@ -45,13 +45,13 @@ public class ZombieCatScript : MonoBehaviour, Enemy
         }
         currVel.Normalize();
         velQ.Add(currVel);
-        if (velQ.Count > 50) velQ.RemoveAt(0);
+        if (velQ.Count > 35) velQ.RemoveAt(0);
         Vector2 sum = Vector2.zero;
         for(int i = 0; i < velQ.Count; i++)
         {
             sum += velQ[i];
         }
-        sum /= 50;
+        sum /= velQ.Count;
         RB.velocity = sum * speed;
     }
 }
