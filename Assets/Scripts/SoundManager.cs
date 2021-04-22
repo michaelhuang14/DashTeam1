@@ -30,8 +30,7 @@ public class SoundManager : MonoBehaviour
 
     public void slowDownCombatLoop()
     {
-        zawarudo.Play(0);
-        Debug.Log("dash planning recieved");
+        //zawarudo.Play(0); Too distracting
         combatLoop.pitch = 0.5f;
         combatLoop.volume = 0.09f;
     }

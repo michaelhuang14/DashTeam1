@@ -22,7 +22,7 @@ public class SniperCatScript : MonoBehaviour, Enemy
     void pattern()
     {
         Vector3 displacement = transform.position - Player.transform.position;
-        if (displacement.magnitude < 20)
+        if (!WithinRange())
         {
             RB.velocity = Vector3.Normalize(displacement) * speed;
         }
