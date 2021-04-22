@@ -19,6 +19,7 @@ public class GameScript : MonoBehaviour
     void Start()
     {
 
+        Time.timeScale = 1f;
         soundManager = new SoundManager(gameObject);
         soundManager.startCombatLoop();
         enemyManager = new EnemyManager(Player, SniperCatPF, ShooterCatPF, ZombieCatPF);
