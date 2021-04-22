@@ -142,9 +142,9 @@ public class PlayerScript : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        //Debug.Log("Detected Player Hit!");
+        Debug.Log("Player hit detected!");
     }
 
     void Update()

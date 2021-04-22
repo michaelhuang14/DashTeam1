@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
+  activeEnemies: []
 --- !u!50 &6306648366608110087
 Rigidbody2D:
   serializedVersion: 4

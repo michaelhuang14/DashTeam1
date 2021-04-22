@@ -29,7 +29,6 @@ public class BulletScript : MonoBehaviour
         speed = 5f;
         RB.velocity = Vector3.Normalize(displacement) * speed;
 
-        StartCoroutine(DeleteBullet());
     }
 
     // Update is called once per frame
@@ -38,17 +37,9 @@ public class BulletScript : MonoBehaviour
         
     }
 
-    IEnumerator DeleteBullet()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(20);
-            Destroy(gameObject);
-        }
-    }
-
-    public void OnHit()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         Destroy(gameObject);
     }
+
 }

@@ -53,7 +53,7 @@ public class SniperCatScript : MonoBehaviour, Enemy
             {
                 GameObject bullet = Instantiate(BulletPF);
                 bullet.GetComponent<BulletScript>().Player = Player;
-                bullet.transform.position = transform.position;
+                bullet.transform.position = transform.position - (transform.position - Player.transform.position).normalized * 1.5f;
             }
             yield return new WaitForSeconds(0.8f);
         }
