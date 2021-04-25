@@ -46,3 +46,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Ground
+    uniqueID: 349811685
+    locked: 0
+  - name: Obstacle
+    uniqueID: 2087777039
+    locked: 0
+  - name: ForeGround
+    uniqueID: 172433887
+    locked: 0

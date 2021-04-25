@@ -42,7 +42,7 @@ public class PlayerScript : MonoBehaviour
         dashRangeR.widthCurve = dashRangeCurve;
 	    dashRangeR.enabled = false;
 	    dashRangeR.positionCount = segments + 1;
-	    dashRangeR.useWorldSpace = false;
+	    dashRangeR.useWorldSpace = true;
 	    dashRangeR.material.SetColor("_Color", Color.white);
 	    dashRangeR.sortingOrder = 1;
 	
@@ -66,7 +66,7 @@ public class PlayerScript : MonoBehaviour
 	    normal_speed = 10f;
         
         spriteR.sortingOrder = 2;
-	    spriteR.material.SetColor("_Color", Color.black);
+	    //spriteR.material.SetColor("_Color", Color.black);
         maxDashLength = 10f;
 	    dashLength = 0f;
     }
@@ -83,7 +83,7 @@ public class PlayerScript : MonoBehaviour
             x = UnityEngine.Mathf.Sin (UnityEngine.Mathf.Deg2Rad * angle) * maxDashLength;
             y = UnityEngine.Mathf.Cos (UnityEngine.Mathf.Deg2Rad * angle) * maxDashLength;
 
-            dashRangeR.SetPosition (i, new Vector2(x,y) );
+            dashRangeR.SetPosition (i, new Vector2(x,y) + (Vector2)transform.position);
 
             angle += (360f / segments);
         }
@@ -98,7 +98,7 @@ public class PlayerScript : MonoBehaviour
             GameManager.GetComponent<GameScript>().dashPlanStart();
         }
         planningDash = true;
-        spriteR.material.SetColor("_Color", Color.white);
+// spriteR.material.SetColor("_Color", Color.white);
         Vector2 lineDir = new Vector2(0f, 0f);
         Vector3 mousept = Input.mousePosition;
         mousept.z = Camera.main.nearClipPlane;
@@ -133,7 +133,7 @@ public class PlayerScript : MonoBehaviour
             RaycastHit2D hit = hits[i];
             hit.transform.gameObject.SendMessage("death", SendMessageOptions.RequireReceiver);
         }
-        spriteR.material.SetColor("_Color", Color.black);
+        //spriteR.material.SetColor("_Color", Color.black);
         dashLength = 0f;
         RB.position = dashLineR.GetPosition(1);
         dashLineR.enabled = false;
