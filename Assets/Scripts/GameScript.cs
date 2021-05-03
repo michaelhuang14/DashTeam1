@@ -26,7 +26,8 @@ public class GameScript : MonoBehaviour
         soundManager = new SoundManager(gameObject);
         soundManager.startCombatLoop();
         enemyManager = new EnemyManager(Player, SniperCatPF, ShooterCatPF, ZombieCatPF);
-        enemyManager.spawnWave();
+	enemyManager.spawnWave(1);
+	StartCoroutine(waveSpawning());
         StartCoroutine(manageEnemies());
     }
     void spawnTreeline() { //-24.5, 17.5,  -7 
@@ -65,6 +66,18 @@ public class GameScript : MonoBehaviour
         }
     }
 
+    IEnumerator waveSpawning()
+    {
+	int difficulty = 2;
+        while (true)
+        {	
+	    Debug.Log("spawning wave");
+            yield return new WaitForSeconds(30f);
+            enemyManager.spawnWave(difficulty);
+	    difficulty += 2;
+        }
+    }
+    
     public void dashPlanStart() {
         soundManager.slowDownCombatLoop();
         Time.timeScale = 0.4f;

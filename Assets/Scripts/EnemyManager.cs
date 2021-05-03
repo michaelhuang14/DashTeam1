@@ -22,10 +22,11 @@ public class EnemyManager : MonoBehaviour
         ZombieCatPF = zombiecat;
     }
 
-    public void spawnWave()
+    public void spawnWave(int diff)
     {
         //spawning in enemies (can change spawning mechanics later)
-        for (int i = 0; i < 3; i++)
+        
+	for (int i = 0; i < diff; i++)
         {
             GameObject tempSniperCat = Instantiate(SniperCatPF);
             tempSniperCat.GetComponent<SniperCatScript>().Player = player;
