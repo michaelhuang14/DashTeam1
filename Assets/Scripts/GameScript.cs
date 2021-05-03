@@ -11,6 +11,7 @@ public class GameScript : MonoBehaviour
     public GameObject SniperCatPF;
     public GameObject ShooterCatPF;
     public GameObject ZombieCatPF;
+    public GameObject TreePF;
 
     private EnemyManager enemyManager;
     private SoundManager soundManager;
@@ -20,13 +21,36 @@ public class GameScript : MonoBehaviour
     {
 
         Time.timeScale = 1f;
+        spawnTreeline();
+	
         soundManager = new SoundManager(gameObject);
         soundManager.startCombatLoop();
         enemyManager = new EnemyManager(Player, SniperCatPF, ShooterCatPF, ZombieCatPF);
         enemyManager.spawnWave();
         StartCoroutine(manageEnemies());
     }
-
+    void spawnTreeline() { //-24.5, 17.5,  -7 
+        int currOrder = 1;
+        float numRows = 5;
+        float maxY = 17.5f;
+        float minY = 5.5f;
+        float maxX = -9f;
+        float minX = -29.5f;
+        int numCols = (int)((maxX - minX) / 5f);
+        float spacing = (maxY - minY)/numRows;
+        float curY = 17.5f;
+	for (int i = 0; i < numRows; i++) { 
+            float curX = minX;
+            for (int j = 0; j < numCols; j++) {
+		GameObject temp = (GameObject)Instantiate(TreePF);
+		temp.transform.position = new Vector3(curX,curY,0);
+                temp.GetComponent<SpriteRenderer>().sortingOrder = currOrder;
+                curX += 5f;
+            }
+            curY -= spacing;
+            currOrder++;
+        } 
+    }
     void Update()
     {
         

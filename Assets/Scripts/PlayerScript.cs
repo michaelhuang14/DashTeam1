@@ -65,7 +65,7 @@ public class PlayerScript : MonoBehaviour
         
 	    normal_speed = 10f;
         
-        spriteR.sortingOrder = 2;
+        spriteR.sortingOrder = 6;
 	    //spriteR.material.SetColor("_Color", Color.black);
         maxDashLength = 10f;
 	    dashLength = 0f;
