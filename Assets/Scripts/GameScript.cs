@@ -26,8 +26,8 @@ public class GameScript : MonoBehaviour
         soundManager = new SoundManager(gameObject);
         soundManager.startCombatLoop();
         enemyManager = new EnemyManager(Player, SniperCatPF, ShooterCatPF, ZombieCatPF);
-	enemyManager.spawnWave(1);
-	StartCoroutine(waveSpawning());
+	enemyManager.spawnWave();
+	//StartCoroutine(waveSpawning());
         StartCoroutine(manageEnemies());
     }
     void spawnTreeline() { //-24.5, 17.5,  -7 
@@ -73,7 +73,7 @@ public class GameScript : MonoBehaviour
         {	
 	    Debug.Log("spawning wave");
             yield return new WaitForSeconds(30f);
-            enemyManager.spawnWave(difficulty);
+            enemyManager.spawnWave();
 	    difficulty += 2;
         }
     }

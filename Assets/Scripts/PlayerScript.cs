@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-
+using UnityEngine.UI;
 // Use Physics.RayCastAll for detecting collisions . Then, on button up, trigger the related colliders
 
 public class PlayerScript : MonoBehaviour
@@ -14,13 +14,15 @@ public class PlayerScript : MonoBehaviour
     public Color dashColor1 = Color.blue;
     public Color dashColor2 = Color.red;
     public float maxDashLength;
-
+    public Text text1;
+   
     private LineRenderer dashRangeR;
     private Rigidbody2D RB;
     private LineRenderer dashLineR;
     private SpriteRenderer spriteR;
     
     
+    private int numHits = 0; 
     private float dashLength;
     private int segments = 50;
     private int dashLayerMask = 1 << 6; // during dash, ignore colliders on all objects except those of the 6th layer
@@ -145,6 +147,10 @@ public class PlayerScript : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log("Player hit detected!");
+        if (collision.collider.gameObject.layer == 6){
+            numHits += 1;
+	    text1.text = "You've gotten hit " + numHits.ToString() + " times!";
+	}
     }
 
     void Update()

@@ -12,7 +12,8 @@ public class EnemyManager : MonoBehaviour
     private GameObject player;
 
     private List<GameObject> activeEnemies = new List<GameObject>();
-
+    private int spinCount = 0;
+    private int diff = 2;
     // Pass in all enemy prefabes at instantiation
     public EnemyManager(GameObject player, GameObject snipercat, GameObject shootercat, GameObject zombiecat)
     {
@@ -22,12 +23,10 @@ public class EnemyManager : MonoBehaviour
         ZombieCatPF = zombiecat;
     }
 
-    public void spawnWave(int diff)
+    public void spawnWave()
     {
         //spawning in enemies (can change spawning mechanics later)
         
-	for (int i = 0; i < diff; i++)
-        {
             GameObject tempSniperCat = Instantiate(SniperCatPF);
             tempSniperCat.GetComponent<SniperCatScript>().Player = player;
             //GameObject tempShooterCat = Instantiate(ShooterCatPF);
@@ -42,8 +41,6 @@ public class EnemyManager : MonoBehaviour
             //activeEnemies.Add(tempShooterCat);
             activeEnemies.Add(tempSniperCat);
             activeEnemies.Add(tempZombieCat);
-        }
-
     }
 
     public void spin()
@@ -81,5 +78,14 @@ public class EnemyManager : MonoBehaviour
         if (deathcounter > 1) {
             Debug.Log("C-C-C-Combo!!!");
         }
+	Debug.Log(spinCount.ToString());
+	if (spinCount % (100*20) == 0){
+       	    Debug.Log("spawning new wave");
+	    for (int i = 0; i < diff; i++){
+                spawnWave();
+            }
+	    diff +=1;
+	}
+        spinCount += 1;
     }
 }
