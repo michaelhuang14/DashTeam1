@@ -6,7 +6,7 @@ public class GameScript : MonoBehaviour
 {
     // This class will contain Game Management behavior, and integrate various 
     // subsystems such as enemy spawning, UI effects on gamestate, level transitions, etc.
-    
+
     public GameObject Player;
     public GameObject SniperCatPF;
     public GameObject ShooterCatPF;
@@ -22,15 +22,17 @@ public class GameScript : MonoBehaviour
 
         Time.timeScale = 1f;
         spawnTreeline();
-	
+
         soundManager = new SoundManager(gameObject);
         soundManager.startCombatLoop();
         enemyManager = new EnemyManager(Player, SniperCatPF, ShooterCatPF, ZombieCatPF);
-	enemyManager.spawnWave();
-	//StartCoroutine(waveSpawning());
+        enemyManager.spawnWave();
+        //StartCoroutine(waveSpawning());
         StartCoroutine(manageEnemies());
+        StartCoroutine(manageAudio());
     }
-    void spawnTreeline() { //-24.5, 17.5,  -7 
+    void spawnTreeline()
+    { //-24.5, 17.5,  -7 
         int currOrder = 1;
         float numRows = 5;
         float maxY = 17.5f;
@@ -38,23 +40,35 @@ public class GameScript : MonoBehaviour
         float maxX = -9f;
         float minX = -29.5f;
         int numCols = (int)((maxX - minX) / 5f);
-        float spacing = (maxY - minY)/numRows;
+        float spacing = (maxY - minY) / numRows;
         float curY = 17.5f;
-	for (int i = 0; i < numRows; i++) { 
+        for (int i = 0; i < numRows; i++)
+        {
             float curX = minX;
-            for (int j = 0; j < numCols; j++) {
-		GameObject temp = (GameObject)Instantiate(TreePF);
-		temp.transform.position = new Vector3(curX,curY,0);
+            for (int j = 0; j < numCols; j++)
+            {
+                GameObject temp = (GameObject)Instantiate(TreePF);
+                temp.transform.position = new Vector3(curX, curY, 0);
                 temp.GetComponent<SpriteRenderer>().sortingOrder = currOrder;
                 curX += 5f;
             }
             curY -= spacing;
             currOrder++;
-        } 
+        }
     }
     void Update()
     {
-        
+
+    }
+
+    IEnumerator manageAudio()
+    {
+        while (true)
+        {
+            // yield return new WaitForSeconds(0.1f);
+            yield return null; 
+            soundManager.spin();
+        }
     }
 
     IEnumerator manageEnemies()
@@ -68,17 +82,18 @@ public class GameScript : MonoBehaviour
 
     IEnumerator waveSpawning()
     {
-	int difficulty = 2;
+        int difficulty = 2;
         while (true)
-        {	
-	    Debug.Log("spawning wave");
+        {
+            Debug.Log("spawning wave");
             yield return new WaitForSeconds(30f);
             enemyManager.spawnWave();
-	    difficulty += 2;
+            difficulty += 2;
         }
     }
-    
-    public void dashPlanStart() {
+
+    public void dashPlanStart()
+    {
         soundManager.slowDownCombatLoop();
         Time.timeScale = 0.4f;
     }

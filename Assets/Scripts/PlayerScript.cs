@@ -20,6 +20,8 @@ public class PlayerScript : MonoBehaviour
     private Rigidbody2D RB;
     private LineRenderer dashLineR;
     private SpriteRenderer spriteR;
+
+    private Animator anim;
     
     
     private int numHits = 0; 
@@ -34,6 +36,7 @@ public class PlayerScript : MonoBehaviour
 	    dashRangeR = new GameObject().AddComponent<LineRenderer>();
         dashRangeR.gameObject.transform.parent = transform;
 	    spriteR = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
 	
 	    float alpha = 1.0f;
 	
@@ -100,7 +103,7 @@ public class PlayerScript : MonoBehaviour
             GameManager.GetComponent<GameScript>().dashPlanStart();
         }
         planningDash = true;
-// spriteR.material.SetColor("_Color", Color.white);
+        // spriteR.material.SetColor("_Color", Color.white);
         Vector2 lineDir = new Vector2(0f, 0f);
         Vector3 mousept = Input.mousePosition;
         mousept.z = Camera.main.nearClipPlane;
@@ -149,8 +152,8 @@ public class PlayerScript : MonoBehaviour
         Debug.Log("Player hit detected!");
         if (collision.collider.gameObject.layer == 6){
             numHits += 1;
-	    text1.text = "You've gotten hit " + numHits.ToString() + " times!";
-	}
+	        text1.text = "You've gotten hit " + numHits.ToString() + " times!";
+	    }
     }
 
     void Update()
@@ -161,6 +164,16 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetKey(KeyCode.S)) newVel.y -= 1f;
         if (Input.GetKey(KeyCode.D)) newVel.x += 1f;
         if (Input.GetKey(KeyCode.A)) newVel.x -= 1f;
+
+        if (newVel.magnitude > 0) {
+            anim.SetBool("is_walking", true);
+            anim.SetFloat("mov_x", newVel.x);
+            anim.SetFloat("mov_y", newVel.y);
+        } else
+        {
+            anim.SetBool("is_walking", false);
+        }
+
         if (Input.GetMouseButton(0))
         {
             PlanDash();
