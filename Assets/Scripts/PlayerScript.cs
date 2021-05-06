@@ -164,6 +164,7 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetKey(KeyCode.S)) newVel.y -= 1f;
         if (Input.GetKey(KeyCode.D)) newVel.x += 1f;
         if (Input.GetKey(KeyCode.A)) newVel.x -= 1f;
+        if (Input.GetKey(KeyCode.Escape)) Application.Quit();
 
         if (newVel.magnitude > 0) {
             anim.SetBool("is_walking", true);
